@@ -1,0 +1,9 @@
+Package: telemetr
+Type: Package
+Title: Radio Direction-finding Telemetry code
+Version: 0.1
+Date: 2012-07-09
+Author: Barry Rowlingson <b.rowlingson@gmail.com>
+Maintainer: Barry Rowlingson <b.rowlingson@gmail.com>
+Description: Locating animals with radio collars? Use this.
+License: MIT
