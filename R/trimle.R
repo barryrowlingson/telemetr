@@ -6,7 +6,7 @@
 #' @param kappa value of kappa
 #' @param sd value of sd
 #' @export
-trimle <- function(xytower,az,ijob=1,kappa=1,sd=2.5){
+trimle <- function(xytower,bearing,ijob=1,kappa=1,sd=2.5){
 
   ntower = nrow(xytower)
   itower = 1:ntower
@@ -14,7 +14,7 @@ trimle <- function(xytower,az,ijob=1,kappa=1,sd=2.5){
   stopifnot(ntower==3)
   coor = c(99,99)
   vc = matrix(-1,2,2)
-  az = (90.-abs(az))*(pi/180.)
+  az = (90.-abs(bearing))*(pi/180.)
   print(xytower)
   res = .Fortran("trimle",
     tutm = as.double(xytower),

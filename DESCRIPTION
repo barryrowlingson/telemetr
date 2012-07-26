@@ -7,3 +7,5 @@ Author: Barry Rowlingson <b.rowlingson@gmail.com>
 Maintainer: Barry Rowlingson <b.rowlingson@gmail.com>
 Description: Locating animals with radio collars? Use this.
 License: MIT
+Collate:
+    'trimle.R'
