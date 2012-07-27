@@ -5,7 +5,9 @@ Version: 0.1
 Date: 2012-07-09
 Author: Barry Rowlingson <b.rowlingson@gmail.com>
 Maintainer: Barry Rowlingson <b.rowlingson@gmail.com>
-Description: Locating animals with radio collars? Use this.
+Description: Code for computing locations given bearings from locations, such
+	     as animal radio telemetry. Based round Fortran code from Gary White of
+	     Colorado State University, used with permission to modify and distribute.
 License: MIT
 Collate:
     'trimle.R'
