@@ -18,9 +18,9 @@ test_that("coords",{
 })
 
 ## 3 readings for each of 4 animals on each of 2 days
-m = makeMoreTriData(ntowers=3,animals=letters[1:4],dates=as.Date("2001/12/1")+0:1)
-expect_equal(nrow(m),3*4*2)
 
+
+testM <- function(m){
 test_that("extraction",{
 
   expect_error(.getxybg())
@@ -45,3 +45,12 @@ test_that("extraction",{
   
   
 })
+}
+
+
+m = makeMoreTriData(ntowers=3,animals=letters[1:4],dates=as.Date("2001/12/1")+0:1)
+expect_equal(nrow(m),3*4*2)
+
+testM(m)
+coordinates(m)=~x+y
+testM(m)

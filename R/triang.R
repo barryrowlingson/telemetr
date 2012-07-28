@@ -4,16 +4,21 @@ triang <- function(f,data,method="mle",subset=TRUE){
   df = .getxybg(f,data,subset=subset)
 
   ## group on all but the first three columns (x,y,bearing)
-  ddply(df,names(df)[-(1:3)],testf)
+  ddply(df,names(df)[-(1:3)],domle)
 
   
 }
 
-testf=function(df){
-  data.frame(x=mean(df$x),y=mean(df$y))
+domle=function(df){
+  fit = trimle(cbind(df$x,df$y),df$bearing)
+  data.frame(x=fit$coor[1],y=fit$coor[2])
 }
 
 .getxybg <- function(f,data,subset=TRUE){
+  coords = .getCoords(data[subset,,drop=FALSE])
+  if(inherits(data,"Spatial")){
+    data=data@data
+  }
   parsed = latticeParseFormula(f,data=data,subset=subset)
   if(!is.null(parsed$left)){
     stop("LHS of formula must be empty")
@@ -23,7 +28,7 @@ testf=function(df){
     ## its all one group
     parsed$condition = data.frame(ID=rep(1,length(parsed$right)))
   }
-  coords = .getCoords(data[subset,,drop=FALSE])
+
   df = data.frame(x=coords[,1],y=coords[,2],
     bearing=bearing,
     parsed$condition

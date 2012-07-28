@@ -24,5 +24,7 @@ makeMoreTriData <- function(ntowers=3,animals=1:4,dates=as.Date("2001/12/1")+0:1
   makeThem = function(...){
     makeTriData(ntowers)
   }
-  adply(expand.grid(animal=animals,date=dates),1,makeThem)
+  d = adply(expand.grid(animal=animals,date=dates),1,makeThem)
+  coordinates(d)=~x+y
+  d
 }
