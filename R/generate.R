@@ -1,4 +1,4 @@
-makeData <- function(ntowers, xlim=c(0,1),ylim=c(0,1),noise=5){
+makeTriData <- function(ntowers, xlim=c(0,1),ylim=c(0,1),noise=5){
   ranpt = function(n,lim){runif(n,lim[1],lim[2])}
   xpt = function(n){ranpt(n,xlim)}
   ypt = function(n){ranpt(n,ylim)}
@@ -17,4 +17,12 @@ makeData <- function(ntowers, xlim=c(0,1),ylim=c(0,1),noise=5){
   xy
                   
     
+}
+
+makeMoreTriData <- function(ntowers=3,animals=1:4,dates=as.Date("2001/12/1")+0:1){
+  force(ntowers)
+  makeThem = function(...){
+    makeTriData(ntowers)
+  }
+  adply(expand.grid(animal=animals,date=dates),1,makeThem)
 }

@@ -2,7 +2,7 @@
 \alias{trimle}
 \title{triangulate by mle}
 \usage{
-  trimle(xytower, az, ijob = 1, kappa = 1, sd = 2.5)
+  trimle(xytower, bearing, ijob = 1, kappa = 1, sd = 2.5)
 }
 \arguments{
   \item{xytower}{2 column matrix of xy coords}

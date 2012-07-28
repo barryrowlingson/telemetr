@@ -10,5 +10,5 @@ test_that("mle basics",{
   names(xytower)=c("x","y","bearing")
   xytower$theta = theta(xytower$bearing)
   tri = trimle(xytower[,c("x","y")],xytower$bearing,ijob=1,sd=2.5)
-  print(tri)
+#  print(tri)
 })

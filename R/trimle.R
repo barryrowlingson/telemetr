@@ -15,7 +15,7 @@ trimle <- function(xytower,bearing,ijob=1,kappa=1,sd=2.5){
   coor = c(99,99)
   vc = matrix(-1,2,2)
   az = (90.-abs(bearing))*(pi/180.)
-  print(xytower)
+
   res = .Fortran("trimle",
     tutm = as.double(xytower),
     az = as.double(az),
