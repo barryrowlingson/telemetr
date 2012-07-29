@@ -11,7 +11,8 @@ triang <- function(f,data,method="mle",subset=TRUE){
 
 domle=function(df){
   fit = trimle(cbind(df$x,df$y),df$bearing)
-  data.frame(x=fit$coor[1],y=fit$coor[2])
+#  data.frame(x=fit$coor[1],y=fit$coor[2])
+  fit
 }
 
 .getxybg <- function(f,data,subset=TRUE){

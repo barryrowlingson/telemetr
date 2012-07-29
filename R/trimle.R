@@ -11,7 +11,7 @@ trimle <- function(xytower,bearing,ijob=1,kappa=1,sd=2.5){
   ntower = nrow(xytower)
   itower = 1:ntower
   xytower=t(as.matrix(xytower))
-  stopifnot(ntower==3)
+  # stopifnot(ntower==3)
   coor = c(99,99)
   vc = matrix(-1,2,2)
   az = (90.-abs(bearing))*(pi/180.)
@@ -28,5 +28,11 @@ trimle <- function(xytower,bearing,ijob=1,kappa=1,sd=2.5){
     ijob = as.integer(ijob),
     ierr = as.integer(0)
     )
-  return(res)
+
+  d = unlist(list(x=res$coor[1],y=res$coor[2],
+       sd=res$sd,kappa=res$kappa,
+       vc=res$vc,
+       ijob=res$ijob,
+       err=res$ierr))
+  return(d)
 }
