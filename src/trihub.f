@@ -7,7 +7,6 @@
       double precision wi,t,tuncnt
       double precision cbar, costu, sumwi, kapinv
       double precision pi
-      common /param/ pi
       integer ipvt(2),iterno,ijob,ierr,itower(ntower)
       logical inital,convrg
 c   tuncnt - tuning constant for m-estimation
@@ -39,6 +38,9 @@ c   indicated by zeros on return.
 c
 c-----------------------------------------------------------------------
 c
+
+      pi=datan(1.d0)*(4.d0)
+
 c
 c   set kappa from sd
 c

@@ -1,7 +1,7 @@
 
 
-.domle=function(df,...){
-  fit = trimle(cbind(df$x,df$y),df$bearing)
+.dohub=function(df,...){
+  fit = trihub(cbind(df$x,df$y),df$bearing)
   fit["npts"]=nrow(df)
 
 #  data.frame(x=fit$coor[1],y=fit$coor[2])
@@ -9,7 +9,7 @@
 }
 
 
-#' triangulate by mle
+#' triangulate by hub method
 #'
 #' @param xytower 2 column matrix of xy coords
 #' @param az azimuth angles in degrees
@@ -17,7 +17,7 @@
 #' @param kappa value of kappa
 #' @param sd value of sd
 #' @export
-trimle <- function(xytower,bearing,ijob=1,kappa=1,sd=2.5){
+trihub <- function(xytower,bearing,ijob=1,kappa=1,sd=2.5){
 
   ntower = nrow(xytower)
   itower = 1:ntower
@@ -27,7 +27,7 @@ trimle <- function(xytower,bearing,ijob=1,kappa=1,sd=2.5){
   vc = matrix(-1,2,2)
   az = (90.-abs(bearing))*(pi/180.)
 
-  res = .Fortran("trimle",
+  res = .Fortran("trihub",
     tutm = as.double(xytower),
     az = as.double(az),
     itower = as.integer(itower),

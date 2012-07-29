@@ -1,5 +1,6 @@
 set.seed(310366)
 
+
 test_that("mle basics",{
   xytower=
     rbind(c(750142, 4393673,  48),
@@ -12,3 +13,5 @@ test_that("mle basics",{
   tri = trimle(xytower[,c("x","y")],xytower$bearing,ijob=1,sd=2.5)
 #  print(tri)
 })
+
+

@@ -52,5 +52,4 @@ m = makeMoreTriData(ntowers=3,animals=letters[1:4],dates=as.Date("2001/12/1")+0:
 expect_equal(nrow(m),3*4*2)
 
 testM(m)
-coordinates(m)=~x+y
-testM(m)
+

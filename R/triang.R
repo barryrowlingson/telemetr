@@ -1,18 +1,21 @@
-triang <- function(f,data,method="mle",subset=TRUE){
+triang <- function(f,data,method="mle",subset=TRUE,...){
 
   ## get x,y,bearing,group data frame
   df = .getxybg(f,data,subset=subset)
 
-  ## group on all but the first three columns (x,y,bearing)
-  ddply(df,names(df)[-(1:3)],domle)
-
+  methodF = switch(method,
+    mle = .domle,
+    and = .doand,
+    hub = .dohub,
+    rmr = .dormr,
+    stop("invalid method ",method," given")
+    )
   
-}
-
-domle=function(df){
-  fit = trimle(cbind(df$x,df$y),df$bearing)
-#  data.frame(x=fit$coor[1],y=fit$coor[2])
-  fit
+  ## group on all but the first three columns (x,y,bearing)
+  triangs = ddply(df,names(df)[-(1:3)],methodF,...)
+  coordinates(triangs)=~x+y
+  triangs
+  
 }
 
 .getxybg <- function(f,data,subset=TRUE){
