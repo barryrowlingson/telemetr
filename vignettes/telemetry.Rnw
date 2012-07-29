@@ -1,0 +1,38 @@
+
+%\VignetteIndexEntry{Direction-finding Telemetry}
+
+\documentclass{article}
+
+\title{Using the {\tt telemetr} package}
+
+\begin{document}
+\maketitle
+
+<<>>=
+set.seed(999)
+library(telemetr)
+m = telemetr:::makeMoreTriData(ntowers=3,animals=letters[1:2],dates=Sys.Date())
+summary(m)
+@ 
+
+<<fig=TRUE>>=
+plot(m)
+telemetr:::drawVectors(~bearing|animal,m)
+@ 
+
+<<>>=
+trmr = triang(~bearing|animal,m,method="rmr")
+tmle = triang(~bearing|animal,m,method="mle")
+@ 
+
+<<fig=TRUE>>=
+plot(NA,xlim=range(coordinates(m)[,1],coordinates(trmr[,1]),coordinates(tmle[,1])),
+     ylim=range(coordinates(m)[,2],coordinates(trmr[,2]),coordinates(tmle[,2])))
+points(m)
+telemetr:::drawVectors(~bearing|animal,m)
+points(trmr,pch=19,col=1:2)
+points(tmle,pch=20,col=1:2)
+
+@ 
+
+\end{document}
