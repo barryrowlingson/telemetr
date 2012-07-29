@@ -18,10 +18,27 @@ trirmr <- function(xytower,bearing){
   theta = theta(bearing)
 
   ri = rayIntersections(xytower,bearing)
-  m1 = ddply(ri,~pt,function(z){c(x=median(z$x),y=median(z$y))})
+  print(.jacknife(ri))
+  return(.xymedianmedian(ri))
+}
 
-  d = c(x=median(m1$x),y=median(m1$y))
-  return(d)
+.xymedianmedian <- function(ri){
+  m1 = ddply(ri,~i,function(z){c(x=median(z$x),y=median(z$y))})
+  return(c(x=median(m1$x),y=median(m1$y)))
+}
+
+.jacknife <- function(ri){
+  xy = data.frame(x=NULL,y=NULL)
+  for(i in unique(ri$i)){
+    jack = ri$i == i | ri$j == i
+    riX = ri[!jack,,drop=FALSE]
+    mm = .xymedianmedian(riX)
+    xy=rbind(xy,data.frame(x=mm["x"],y=mm["y"]))
+  }
+  n = length(unique(ri$i))
+  jack.se.x = sqrt(((n-1)/n) * sum((xy[,1]-mean(xy[,1]))^2))
+  jack.se.y = sqrt(((n-1)/n) * sum((xy[,2]-mean(xy[,2]))^2))
+  c(jack.se.x,jack.se.y)
 }
 
 #' compute ray intersections
@@ -30,12 +47,13 @@ trirmr <- function(xytower,bearing){
 rayIntersections <- function(xy,bearing){
   theta = theta(bearing)
   xy = cbind(xy,xy[,1]+cos(theta),xy[,2]+sin(theta))
-  crosses = data.frame(x=NULL,y=NULL,pt=NULL)
+  crosses = data.frame(x=NULL,y=NULL,i=NULL)
   for(i in 1:nrow(xy)){
     x3 = xy[,1]; x4 = xy[,3]
     y3 = xy[,2]; y4 = xy[,4]
     x1 = x3[i]; x2=x4[i]
     y1 = y3[i]; y2=y4[i]
+    j = (1:nrow(xy))[-i]
     x3=x3[-i];x4=x4[-i]
     y3=y3[-i];y4=y4[-i]
 
@@ -48,7 +66,7 @@ rayIntersections <- function(xy,bearing){
     x = x1 + (na/da)*(x2-x1)
     y = y1 + (na/da)*(y2-y1)
     ok = sign(na/da)==1 & sign(nb/db)==1
-    crosses=rbind(crosses,data.frame(x=x[ok],y=y[ok],pt=rep(i,sum(ok))))
+    crosses=rbind(crosses,data.frame(x=x[ok],y=y[ok],i=rep(i,sum(ok)),j=j[ok]))
   }
 
   crosses
