@@ -1,1 +1,7 @@
+export(makeMoreTriData)
+export(makeTriData)
+export(rayIntersections)
+export(triand)
+export(trihub)
 export(trimle)
+export(trirmr)

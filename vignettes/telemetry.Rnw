@@ -8,6 +8,11 @@
 \begin{document}
 \maketitle
 
+\section*{Testing With Random Data}
+
+First we'll generate some random data. For each of two animals we'll get three bearings
+on a single day.
+
 <<>>=
 set.seed(999)
 library(telemetr)
@@ -15,15 +20,21 @@ m = telemetr:::makeMoreTriData(ntowers=3,animals=letters[1:2],dates=Sys.Date())
 summary(m)
 @ 
 
+We'll plot the bearings, colouring by animal:
+
 <<fig=TRUE>>=
 plot(m)
 telemetr:::drawVectors(~bearing|animal,m)
 @ 
 
+Now we locate using two methods:
+
 <<>>=
 trmr = triang(~bearing|animal,m,method="rmr")
 tmle = triang(~bearing|animal,m,method="mle")
 @ 
+
+Next we plot the points and the location estimates:
 
 <<fig=TRUE>>=
 plot(NA,xlim=range(coordinates(m)[,1],coordinates(trmr[,1]),coordinates(tmle[,1])),
@@ -34,5 +45,79 @@ points(trmr,pch=19,col=1:2)
 points(tmle,pch=20,col=1:2)
 
 @ 
+
+\section*{Testing with Lenth Data}
+
+The sample data from Lenth's Technometrics article was typed in and is available
+the {\tt samples} folder. We read it in. One of the readings was used to test the robustness
+of the estimators, so we will add a flag column to the data. This table should be close to
+Lenth's table 1.
+
+<<>>=
+lenth = read.table(system.file("samples","lenth.dat",package="telemetr"))
+coordinates(lenth)=~x+y
+lenth$ok = 1
+lenth$ok[6]=0
+lenth
+@ 
+
+Now we loop over the methods and also whether to include the outlier or not.
+The resulting table should duplicate Lenth's table 2 once all the methods and
+error estimates are working:
+
+<<>>=
+results = data.frame(method=NULL,x=NULL,y=NULL)
+for(subset in list(lenth$ok==1,TRUE)){
+  for(method in c("mle","hub","and","rmr")){
+    tri = triang(~bearing,lenth,method=method,subset=subset)
+    results=rbind(results,data.frame(
+      npts=tri$npts,method=method,
+      x=coordinates(tri)[,1],y=coordinates(tri)[,2]))
+  }
+}
+options(digits=3)
+  results
+@ 
+
+Currently the point estimates are exact, or close to 1dp for most cases.
+
+The following plot emulates Lenth's figure 1:
+
+<<fig=TRUE>>=
+plot(coordinates(lenth),xlim=c(0,10),ylim=c(0,10),bty="l",type="n",asp=1)
+text(coordinates(lenth)[,1],coordinates(lenth)[,2]+.3,as.character(1:nrow(lenth)))
+axis(1)
+axis(2)
+
+drawVectors(~bearing,lenth,subset=lenth$ok==1)
+
+@ 
+
+We can try and emulate Lenth's figure 3 but the labelling is problematic. 
+
+<<fig=TRUE>>=
+coordinates(results)=~x+y
+plot(coordinates(results),type="n",asp=1,bty="l")
+plot(results,add=TRUE)
+text(coordinates(results),paste(results$method,results$npts))
+@ 
+
+Another option is to use {\tt ggplot} to style the points:
+
+<<fig=TRUE>>=
+print(
+      ggplot(as.data.frame(results))+
+   geom_point(aes(x=x,y=y,colour=method,pch=as.factor(npts)),cex=3)+coord_fixed()
+      )
+@ 
+
+\section*{Appendix}
+
+
+On Finding the Source of a Signal
+Author(s): Russell V. Lenth
+Reviewed work(s):
+Source: Technometrics, Vol. 23, No. 2 (May, 1981), pp. 149-154
+
 
 \end{document}

@@ -10,7 +10,11 @@ BugReports: https://github.com/barryrowlingson/telemetr/issues
 Description: Code for computing locations given bearings from locations, such
     as animal radio telemetry. Based round Fortran code from Gary White of
     Colorado State University, used with permission to modify and distribute.
-Depends: R (>= 2.14.0), lattice, sp
+Depends:
+    R (>= 2.14.0),
+    lattice,
+    sp,
+    plyr
 License: MIT
 Collate:
     'trimle.R'
@@ -18,3 +22,6 @@ Collate:
     'drawVectors.R'
     'generate.R'
     'triang.R'
+    'triand.R'
+    'trihub.R'
+    'trirmr.R'
