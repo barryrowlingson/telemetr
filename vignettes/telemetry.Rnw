@@ -16,6 +16,7 @@ on a single day.
 <<>>=
 set.seed(999)
 library(telemetr)
+library(ggplot2)
 m = telemetr:::makeMoreTriData(ntowers=3,animals=letters[1:2],dates=Sys.Date())
 summary(m)
 @ 

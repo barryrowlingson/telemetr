@@ -9,13 +9,15 @@
 }
 
 
-#' triangulate by mle
+#' triangulate by maximum likelihood estimation method
 #'
 #' @param xytower 2 column matrix of xy coords
-#' @param az azimuth angles in degrees
+#' @param bearing azimuth angles in degrees
 #' @param ijob whether to fit kappa
 #' @param kappa value of kappa
 #' @param sd value of sd
+#'
+#' @return A named vector with x and y values, variance matrix and error indicator
 #' @export
 trimle <- function(xytower,bearing,ijob=1,kappa=1,sd=2.5){
 

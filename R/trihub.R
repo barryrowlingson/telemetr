@@ -9,13 +9,16 @@
 }
 
 
-#' triangulate by hub method
+#' triangulate by Huber method
 #'
 #' @param xytower 2 column matrix of xy coords
-#' @param az azimuth angles in degrees
+#' @param bearing azimuth angles in degrees
 #' @param ijob whether to fit kappa
 #' @param kappa value of kappa
 #' @param sd value of sd
+#'
+#' Uses the Huber method.
+#' @return A named vector with x and y values, variance matrix and error indicator
 #' @export
 trihub <- function(xytower,bearing,ijob=1,kappa=1,sd=2.5){
 

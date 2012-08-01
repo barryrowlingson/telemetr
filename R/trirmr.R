@@ -10,7 +10,14 @@
 #' triangulate by repeated median method
 #'
 #' @param xytower 2 column matrix of xy coords
-#' @param az azimuth angles in degrees
+#' @param bearing azimuth angles in degrees
+#'
+#' for each bearing compute the intersection with all the other bearings,
+#' and take the median x and median y of those intersections. This gives one
+#' x and y for each bearing. Then take the median of those x and y coordinates
+#' to get a single value. Compute the standard error by a jack-knife procedure.
+#'
+#' @return A named vector of x and y coords
 #' @export
 trirmr <- function(xytower,bearing){
 
@@ -18,7 +25,7 @@ trirmr <- function(xytower,bearing){
   theta = theta(bearing)
 
   ri = rayIntersections(xytower,bearing)
-  print(.jacknife(ri))
+  jack = .jacknife(ri)
   return(.xymedianmedian(ri))
 }
 
@@ -42,6 +49,12 @@ trirmr <- function(xytower,bearing){
 }
 
 #' compute ray intersections
+#'
+#' @param xy 2-column matrix of coordinates
+#' @param bearing vector of azimuth measurements in degrees from north
+#'
+#' @return a four column data frame with x and y coordinates of all intersections,
+#'         and i and j integer indices of the corresponding inputs. 
 #'
 #' @export
 rayIntersections <- function(xy,bearing){
