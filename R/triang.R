@@ -20,8 +20,8 @@
 #' \code{\link{trirmr}}. These functions only work on a single set of observations.
 #'
 #' @return A spatial data frame of each position estimate for data within each group.
-#' @export
 #' @useDynLib telemetr
+#' @export
 triang <- function(f,data,method="mle",subset=TRUE,...){
 
   ## get x,y,bearing,group data frame
