@@ -2,7 +2,7 @@
 #'
 #' Using bearings and locations to find things.
 #'
-#' @name telemetr-pacakge
+#' @name telemetr-package
 #' @aliases telemetr
 #' @docType package
 #' @title Location finding by directional telemetry

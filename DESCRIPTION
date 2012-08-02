@@ -1,8 +1,8 @@
 Package: telemetr
 Type: Package
 Title: Radio Direction-finding Telemetry code
-Version: 0.2
-Date: 2012-07-09
+Version: 0.3
+Date: 2012-08-01
 Author: Barry Rowlingson <b.rowlingson@gmail.com>
 Maintainer: Barry Rowlingson <b.rowlingson@gmail.com>
 URL: https://github.com/barryrowlingson/telemetr
@@ -25,3 +25,4 @@ Collate:
     'triand.R'
     'trihub.R'
     'trirmr.R'
+    'telemetr-package.R'
