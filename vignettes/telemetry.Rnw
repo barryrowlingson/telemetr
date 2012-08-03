@@ -112,6 +112,41 @@ print(
       )
 @ 
 
+\section*{Demo Data}
+
+Another batch of demo data was supplied with the Fortran source code. This consisted of
+a number of azimuths from three towers (although a tower location file with 8 towers 
+was supplied, only three seem to be used in the data). This was converted into a spatial
+points data frame as {\tt azr} in the package.
+
+
+<<fig=TRUE>>=
+data(azr)
+mlefits = triang(~bearing|animal,azr,method="mle")
+rmrfits = triang(~bearing|animal,azr,method="rmr")
+andfits = triang(~bearing|animal,azr,method="and")
+bb = bbox(rbind(coordinates(azr),
+  coordinates(mlefits),
+  coordinates(rmrfits),
+  coordinates(andfits)))
+par(mfrow=c(4,4))
+par(mar=c(0,0,2,0))
+colours=c("#1B9E77", "#D95F02", "#7570B3", "#E7298A")
+for(i in 17:32){
+  bb = bbox(rbind(coordinates(azr),coordinates(rmrfits[i,]),
+    coordinates(mlefits[i,]),coordinates(andfits[i,])))
+  plot(SpatialPoints(t(bb)),cex=0)
+  plot(azr[azr$animal==i,],add=TRUE)
+  drawVectors(~bearing|animal,azr,subset=azr$animal==i)
+  points(rmrfits[i,],pch=19,col=colours[1],cex=3)
+  points(mlefits[i,],pch=19,col=colours[2],cex=2)
+  points(andfits[i,],pch=19,col=colours[4],cex=1.5)
+  box()
+  title(paste("Data ",i))
+}
+  
+@ 
+
 \section*{Appendix}
 
 
