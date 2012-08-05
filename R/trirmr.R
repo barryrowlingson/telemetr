@@ -26,7 +26,7 @@ trirmr <- function(xytower,bearing){
 
   ri = rayIntersections(xytower,bearing)
   jack = .jacknife(ri)
-  return(.xymedianmedian(ri))
+  return(c(.xymedianmedian(ri),jack))
 }
 
 .xymedianmedian <- function(ri){
@@ -42,10 +42,12 @@ trirmr <- function(xytower,bearing){
     mm = .xymedianmedian(riX)
     xy=rbind(xy,data.frame(x=mm["x"],y=mm["y"]))
   }
+  xy = subset(xy,!is.na(xy[,1]))
   n = length(unique(ri$i))
+  n = nrow(xy)
   jack.se.x = sqrt(((n-1)/n) * sum((xy[,1]-mean(xy[,1]))^2))
   jack.se.y = sqrt(((n-1)/n) * sum((xy[,2]-mean(xy[,2]))^2))
-  c(jack.se.x,jack.se.y)
+  c(se.x=jack.se.x,se.y=jack.se.y,cor=cor(xy[,1],xy[,2]))
 }
 
 #' compute ray intersections
