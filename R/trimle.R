@@ -42,10 +42,16 @@ trimle <- function(xytower,bearing,ijob=1,kappa=1,sd=2.5){
     ierr = as.integer(0)
     )
 
+  covmat = matrix(c(res$vc[1],res$vc[2],res$vc[3],res$vc[4]),ncol=2)
+  cor = cov2cor(covmat)[1,2]
+  se.xy = sqrt(diag(covmat))
+  
   d = unlist(list(x=res$coor[1],y=res$coor[2],
-       sd=res$sd,kappa=res$kappa,
-       vc=res$vc,
-       ijob=res$ijob,
-       err=res$ierr))
+    sd=res$sd,kappa=res$kappa,
+    cor = cor,
+    se.x=se.xy[1],
+    se.y=se.xy[2],
+    ijob=res$ijob,
+    err=res$ierr))
   return(d)
 }

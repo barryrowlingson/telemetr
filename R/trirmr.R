@@ -47,6 +47,7 @@ trirmr <- function(xytower,bearing){
   n = nrow(xy)
   jack.se.x = sqrt(((n-1)/n) * sum((xy[,1]-mean(xy[,1]))^2))
   jack.se.y = sqrt(((n-1)/n) * sum((xy[,2]-mean(xy[,2]))^2))
+
   c(se.x=jack.se.x,se.y=jack.se.y,cor=cor(xy[,1],xy[,2]))
 }
 
