@@ -28,7 +28,7 @@ test_that("extraction",{
   expect_error(.getxybg(date~bearing,m),"must be empty") # nothing on LHS
   
   t1 = .getxybg(~bearing,m)
-  expect_error(.getxybg(~bearing|day,m),"not found") # wrong name
+  #  expect_error(.getxybg(~bearing|day,m),"not found") # wrong name
   t2 = .getxybg(~bearing|date,m)
   t3 = .getxybg(~bearing|date+animal,m)
   

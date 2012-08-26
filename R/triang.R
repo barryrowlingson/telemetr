@@ -38,6 +38,7 @@ triang <- function(f,data,method="mle",subset=TRUE,...){
   ## group on all but the first three columns (x,y,bearing)
   triangs = ddply(df,names(df)[-(1:3)],methodF,...)
   coordinates(triangs)=~x+y
+  proj4string(triangs) = proj4string(data)
   triangs
   
 }
